@@ -7,7 +7,8 @@
   },
   "dependencies": {
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-kaios-navigation": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

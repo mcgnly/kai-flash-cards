@@ -31,3 +31,17 @@
     transform: rotate(360deg);
   }
 }
+
+.title{
+  margin: 5px;
+}
+.decks {
+  display: flex;
+  background-color: blueviolet;
+  color: whitesmoke;
+  justify-content: space-around;
+}
+.btn {
+  border: 2px solid gray;
+  border-radius: 5px;
+}

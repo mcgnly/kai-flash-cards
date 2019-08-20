@@ -1,0 +1,12 @@
+
+- shuffle the cards
+- display the stats per deck
+- authenticate the user (login with phone number/email)
+- store the decks and cards on a server
+- retrieve the decks and cards for a user
+- store the decks and cards in local storage for a kaiOS phone
+- memory-scheduler for spaced repetition of cards
+- some kind of animation for flipping the card?
+- add card
+- remove card
+- edit card and reset stats for it

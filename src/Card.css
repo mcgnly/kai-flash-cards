@@ -1,0 +1,7 @@
+.currentCard {
+    border: 2px solid black;    
+}
+.answerButton{ 
+    border: 2px solid gray;
+    border-radius: 5px;
+}

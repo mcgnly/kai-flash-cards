@@ -1,24 +1,107 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, useEffect, useReducer} from 'react';
 import './App.css';
+import originalDecks from './decks.json';
+import { Card } from './Card';
+import { Statistics } from './Statistics';
+import getIndexArray from './randomizeDeck';
+import reducer from './reducer';
+
+// const emptyCard = {
+//   id: null,
+//   q: '',
+//   a: '',
+//   timesCorrect: 0,
+//   timesWrong: 0,
+//   dateLastCorrect: null,
+//   dateLastWrong: null,
+// };
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, originalDecks);
+  const [currentDeck, setCurrentDeck] = useState('');
+  const [answerDisplayed, setAnswerDisplay] = useState(false);
+  const [currentCardId, setCurrentCardId] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(()=>{
+    console.log('currentDeck', currentDeck)
+    console.log('currentCardId', currentCardId)
+    console.log('currentIndex', currentIndex)
+    console.log('Card', currentDeck && state[currentDeck][currentCardId])
+  }, [currentCardId, currentDeck, currentIndex, state])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <h2 className='title'>Flashcards</h2>
+        <div className='decks'>
+          {state && Object.keys(state).map((item)=>{
+          return (
+            <button
+              onClick={()=> {
+                setCurrentDeck(item);
+                setCurrentCardId(0);
+              }}
+              // TODO make a class the highlights the current deck
+            >
+              {item}
+            </button>  
+          )
+        })}
+        </div>
+      {currentDeck &&
+        <Card currentCard={state[currentDeck][currentCardId]} 
+        setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} />
+      }
+      {answerDisplayed && 
+        <div>
+          <p>Did you get it right?</p>
+          <button
+            className='btn'
+            onClick={()=>dispatch({
+              type: 'updateStatsCorrect',
+              payload: {
+                currentDeck,
+                currentCardId
+                // TODO fix date last correct/wrong
+              }
+            })}
+          >
+            yes
+          </button>
+          <button
+            className='btn'
+            onClick={()=>dispatch({
+              type: 'updateStatsWrong',
+              payload: {
+                currentDeck,
+                currentCardId
+              }
+            })}
+          >
+            no
+          </button>
+        </div>}
+        {currentDeck &&
+        <Statistics currentCard={state[currentDeck][currentCardId] || {}} />
+        }
+      
+        <button
+          className='btn'
+          onClick={()=>{
+            // TODO increment broken again
+            // TODO implement randomize array
+            const deck = state[currentDeck];
+            const indexArray = getIndexArray(deck)
+            // indexArray = [2,0,3,1]
+            const maxIndex = indexArray.length-1;
+            setCurrentIndex(currentIndex<maxIndex ? currentIndex+1 : currentIndex)
+            console.log('inside the next btn', deck[indexArray[currentIndex]])
+            setCurrentCardId(deck[indexArray[currentIndex]]);
+          }
+        }
         >
-          Learn React
-        </a>
-      </header>
+          Next card
+        </button>
     </div>
   );
 }

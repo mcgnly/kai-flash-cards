@@ -1,0 +1,44 @@
+{
+    "french": {
+        "1": {
+            "id": 1,
+            "q": "hello",
+            "a": "bonjour",
+            "timesCorrect": 0,
+            "timesWrong": 0,
+            "dateLastCorrect": null,
+            "dateLastWrong": null
+        },
+        "0": {
+            "id": 0,
+            "q": "goodbye",
+            "a": "au revoir",
+            "timesCorrect": 0,
+            "timesWrong": 0,
+            "dateLastCorrect": null,
+            "dateLastWrong": null
+        }
+    },
+
+    "german": {
+        "1": {
+            "id": 1,
+            "q": "hello",
+            "a": "hallo",
+            "timesCorrect": 0,
+            "timesWrong": 0,
+            "dateLastCorrect": null,
+            "dateLastWrong": null
+        },
+
+        "0": {
+            "id": 0,
+            "q": "goodbye",
+            "a": "tschuss",
+            "timesCorrect": 0,
+            "timesWrong": 0,
+            "dateLastCorrect": null,
+            "dateLastWrong": null
+        }
+    }
+}
