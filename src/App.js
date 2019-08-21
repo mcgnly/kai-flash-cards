@@ -62,7 +62,6 @@ function App() {
               payload: {
                 currentDeck,
                 currentCardId
-                // TODO fix date last correct/wrong
               }
             })}
           >
@@ -85,7 +84,7 @@ function App() {
         <Statistics currentCard={state[currentDeck][currentCardId] || {}} />
         }
       
-        <button
+        {currentDeck && <button
           className='btn'
           onClick={()=>{
             // TODO implement randomize array
@@ -96,11 +95,10 @@ function App() {
             const newCurrentIndex = currentIndex<maxIndex ? currentIndex+1 : currentIndex;
             setCurrentIndex(newCurrentIndex)
             setCurrentCardId(indexArray[newCurrentIndex]);
-          }
-        }
-        >
+          }}>
           Next card
         </button>
+      }
     </div>
   );
 }

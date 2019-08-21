@@ -6,8 +6,8 @@
             "a": "bonjour",
             "timesCorrect": 0,
             "timesWrong": 0,
-            "dateLastCorrect": null,
-            "dateLastWrong": null
+            "dateLastCorrect": "",
+            "dateLastWrong": ""
         },
         "0": {
             "id": 0,
@@ -15,8 +15,8 @@
             "a": "au revoir",
             "timesCorrect": 0,
             "timesWrong": 0,
-            "dateLastCorrect": null,
-            "dateLastWrong": null
+            "dateLastCorrect": "",
+            "dateLastWrong": ""
         }
     },
 
@@ -27,8 +27,8 @@
             "a": "hallo",
             "timesCorrect": 0,
             "timesWrong": 0,
-            "dateLastCorrect": null,
-            "dateLastWrong": null
+            "dateLastCorrect": "",
+            "dateLastWrong": ""
         },
 
         "0": {
@@ -37,8 +37,8 @@
             "a": "tschuss",
             "timesCorrect": 0,
             "timesWrong": 0,
-            "dateLastCorrect": null,
-            "dateLastWrong": null
+            "dateLastCorrect": "",
+            "dateLastWrong": ""
         }
     }
 }
