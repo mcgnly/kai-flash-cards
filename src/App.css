@@ -41,6 +41,10 @@
   color: whitesmoke;
   justify-content: space-around;
 }
+.activeDeck {
+  border: 2px solid gray;
+}
+
 .btn {
   border: 2px solid gray;
   border-radius: 5px;

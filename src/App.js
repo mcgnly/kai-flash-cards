@@ -34,13 +34,15 @@ function App() {
       <h2 className='title'>Flashcards</h2>
         <div className='decks'>
           {state && Object.keys(state).map((item)=>{
+            const deckClass = item===currentDeck ? 'activeDeck' : '';
           return (
             <button
+              key={item}
+              className={deckClass}
               onClick={()=> {
                 setCurrentDeck(item);
                 setCurrentIndex(0);
               }}
-              // TODO make a class the highlights the current deck
             >
               {item}
             </button>  
