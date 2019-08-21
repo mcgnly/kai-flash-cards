@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import './Card.css';
 
 function Card({ currentCard, setAnswerDisplay, answerDisplayed }) {
-    console.log('in the card', currentCard)
     return (
         <div className='currentCard'>
           <p>Question: {currentCard.q}</p>

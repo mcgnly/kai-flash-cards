@@ -23,12 +23,12 @@ function App() {
   const [currentCardId, setCurrentCardId] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(()=>{
-    console.log('currentDeck', currentDeck)
-    console.log('currentCardId', currentCardId)
-    console.log('currentIndex', currentIndex)
-    console.log('Card', currentDeck && state[currentDeck][currentCardId])
-  }, [currentCardId, currentDeck, currentIndex, state])
+  // useEffect(()=>{
+  //   console.log('currentDeck', currentDeck)
+  //   console.log('currentCardId', currentCardId)
+  //   console.log('currentIndex', currentIndex)
+  //   console.log('Card', currentDeck && state[currentDeck][currentCardId])
+  // }, [currentCardId, currentDeck, currentIndex, state])
 
   return (
     <div className="App">
@@ -88,15 +88,14 @@ function App() {
         <button
           className='btn'
           onClick={()=>{
-            // TODO increment broken again
             // TODO implement randomize array
             const deck = state[currentDeck];
             const indexArray = getIndexArray(deck)
             // indexArray = [2,0,3,1]
             const maxIndex = indexArray.length-1;
-            setCurrentIndex(currentIndex<maxIndex ? currentIndex+1 : currentIndex)
-            console.log('inside the next btn', deck[indexArray[currentIndex]])
-            setCurrentCardId(deck[indexArray[currentIndex]]);
+            const newCurrentIndex = currentIndex<maxIndex ? currentIndex+1 : currentIndex;
+            setCurrentIndex(newCurrentIndex)
+            setCurrentCardId(indexArray[newCurrentIndex]);
           }
         }
         >
