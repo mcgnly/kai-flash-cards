@@ -1,22 +1,18 @@
-export default function(deck){
+export default function shuffle(deck){
     const indexStringArray = Object.keys(deck);
-    // function shuffle(array) {
-    //     var i = array.length,
-    //         j = 0,
-    //         temp;
-    
-    //     while (i--) {
-    
-    //         j = Math.floor(Math.random() * (i+1));
-    
-    //         // swap randomly chosen element with current element
-    //         temp = array[i];
-    //         array[i] = array[j];
-    //         array[j] = temp;
-    
-    //     }
-    
-    //     return array;
-    // }
+    // Fischer-Yates shuffle
+    var i = indexStringArray.length,
+        j = 0,
+        temp;
+
+    while (i--) { 
+        // randomly choose an element between 0 and length
+        j = Math.floor(Math.random() * (i+1));
+        // swap randomly chosen element with current element
+        temp = indexStringArray[i];
+        indexStringArray[i] = indexStringArray[j];
+        indexStringArray[j] = temp;
+    }
+
     return indexStringArray;
 }

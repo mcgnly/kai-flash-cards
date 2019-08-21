@@ -22,13 +22,12 @@ function App() {
   const [answerDisplayed, setAnswerDisplay] = useState(false);
   const [currentCardId, setCurrentCardId] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [indexArray, setIndexArray] = useState([]);
 
-  // useEffect(()=>{
-  //   console.log('currentDeck', currentDeck)
-  //   console.log('currentCardId', currentCardId)
-  //   console.log('currentIndex', currentIndex)
-  //   console.log('Card', currentDeck && state[currentDeck][currentCardId])
-  // }, [currentCardId, currentDeck, currentIndex, state])
+  useEffect(()=>{
+    const newIndexArray = currentDeck && getIndexArray(state[currentDeck]);
+    setIndexArray(newIndexArray);
+  }, [currentDeck, state])
 
   return (
     <div className="App">
@@ -39,7 +38,7 @@ function App() {
             <button
               onClick={()=> {
                 setCurrentDeck(item);
-                setCurrentCardId(0);
+                setCurrentIndex(0);
               }}
               // TODO make a class the highlights the current deck
             >
@@ -87,9 +86,6 @@ function App() {
         {currentDeck && <button
           className='btn'
           onClick={()=>{
-            // TODO implement randomize array
-            const deck = state[currentDeck];
-            const indexArray = getIndexArray(deck)
             // indexArray = [2,0,3,1]
             const maxIndex = indexArray.length-1;
             const newCurrentIndex = currentIndex<maxIndex ? currentIndex+1 : currentIndex;
