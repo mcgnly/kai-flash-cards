@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "dotenv": "^8.1.0",
     "react-scripts": "3.0.1"
   },
   "dependencies": {
+    "firebase": "^6.4.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-kaios-navigation": "^1.0.0"

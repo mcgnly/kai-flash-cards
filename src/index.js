@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import injectKaiosNavigation from 'react-kaios-navigation';
+import injectKaiosNavigation from './react-kaios-navigation/index';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

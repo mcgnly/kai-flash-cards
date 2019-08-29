@@ -1,0 +1,15 @@
+{
+  "name": "Flashcards",
+  "description": "Train your memory with flashcards",
+  "launch_path": "/index.html",
+  "icons": {
+    "16": "favicon.ico",
+    "48": "favicon.ico",
+    "60": "favicon.ico",
+    "128": "favicon.ico"
+  },
+  "developer": {
+    "name": "K McGinley",
+    "url": "http://www.mcgnly.com"
+  }
+}
