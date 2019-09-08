@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './Card.css';
+import './css/Card.css';
 
 function Card({ currentCard, setAnswerDisplay, answerDisplayed }) {
     return (

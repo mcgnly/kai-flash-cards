@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './Statistics.css';
+import './css/Statistics.css';
 
 function Statistics({ currentCard }) {
     return (

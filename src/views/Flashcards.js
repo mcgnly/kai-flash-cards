@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useReducer} from 'react';
-import './App.css';
-import originalDecks from './decks.json';
+import './css/Home.css';
+import originalDecks from '../decks.json';
 import { Card } from './Card';
 import { Statistics } from './Statistics';
-import getIndexArray from './randomizeDeck';
-import reducer from './reducer';
+import getIndexArray from '../utils/randomizeDeck';
+import reducer from '../utils/reducer';
 
 // const emptyCard = {
 //   id: null,
@@ -16,7 +16,7 @@ import reducer from './reducer';
 //   dateLastWrong: null,
 // };
 
-function App() {
+function Home() {
   const [state, dispatch] = useReducer(reducer, originalDecks);
   const [currentDeck, setCurrentDeck] = useState('');
   const [answerDisplayed, setAnswerDisplay] = useState(false);
@@ -30,7 +30,7 @@ function App() {
   }, [currentDeck, state])
 
   return (
-    <div className="App">
+    <div className="Home">
       <h2 className='title'>Flashcards</h2>
         <div className='decks'>
           {state && Object.keys(state).map((item)=>{
@@ -101,4 +101,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;

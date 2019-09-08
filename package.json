@@ -7,10 +7,14 @@
     "react-scripts": "3.0.1"
   },
   "dependencies": {
-    "firebase": "^6.4.2",
+    "firebase": "^6.6.0",
+    "firebaseui": "^4.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-kaios-navigation": "^1.0.0"
+    "react-firebaseui": "^4.0.0",
+    "react-kaios-navigation": "^1.0.0",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
