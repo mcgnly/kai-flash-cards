@@ -14,14 +14,12 @@ const config = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 };
 
-console.log('config', config)
-firebase.initializeApp(config);
-// const app = firebase.initializeApp(config);
-// const auth = app.auth();
-// const db = app.firestore();
-console.log('firebase', firebase)
+// firebase.initializeApp(config);
+const app = firebase.initializeApp(config);
+const auth = app.auth();
+const db = app.firestore();
 
 const FirebaseContext = React.createContext(null);
 
-export { FirebaseContext};
-export default firebase;
+export { app, auth, db, firebase };
+export default FirebaseContext;

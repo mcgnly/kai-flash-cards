@@ -1,54 +1,36 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FirebaseContext } from '../utils/firebaseContext';
-import Flashcards from './Flashcards'
+import FirebaseContext from '../utils/firebaseContext';
+import Decks from './Decks'
 // import axios from 'axios';
 
 export default function HomePage(){
-  const firebase = useContext(FirebaseContext);
+  const { auth, db } = useContext(FirebaseContext);
   const [user, setUser] = useState('');
   const [token, setToken] = useState('');
-  // const [data, setData] = useState({});
+  const [myDecks, setMyDecks] = useState([]);
 
   useEffect(()=>{
     // use this watcher here so that it finishes initializing before updating
-    firebase.auth().onAuthStateChanged(function(user) {
+    auth.onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
-        setUser(user.displayName);
+        setUser(user);
         user.getIdToken().then(
           (idToken)=> {
-            // firebase returns the token as a result of this call, which we pass in the header to our API
             setToken(idToken)
           }
         ).catch((err)=> console.log(err));
-
-      //   async function fetchData(){
-      //   const result = await axios(
-      //     'http://localhost:3333/secretpath/',
-      //     {
-      //       headers: {
-      //         Authorization: `Bearer ${token}`
-      //       }
-      //     }
-      //   );
-      //   setData(result.data);
-      // }
-      // if (token) {
-      //   fetchData();
-      // }
-      // } else {
-      //   // No user is signed in.
-      //   console.log('no user')
       }
     });
   }
-  , [firebase, token, user]);
+  , [auth, db, token, user]);
+
 
   function dataView() {
     return (
       <div>
-        <p>Hello, {user},</p>
-        <Flashcards />
+        <p>Hello, {user.displayName},</p>
+        <Decks uid={user.uid} />
       </div>
     );
   }
@@ -60,6 +42,7 @@ export default function HomePage(){
       {user ?
         dataView():
         <p>go to landing to sign in</p>
+        // TODO push to landing route
       }
     </div>
   </div>

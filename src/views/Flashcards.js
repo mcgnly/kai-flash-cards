@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import './css/Home.css';
-import originalDecks from '../decks.json';
+// import originalDecks from '../decks.json';
 import { Card } from './Card';
 import { Statistics } from './Statistics';
 import getIndexArray from '../utils/randomizeDeck';
@@ -16,8 +16,11 @@ import reducer from '../utils/reducer';
 //   dateLastWrong: null,
 // };
 
-function Home() {
-  const [state, dispatch] = useReducer(reducer, originalDecks);
+function Flashcards({ myDecks }) {
+  console.log('my decks', myDecks)
+
+  const [state, dispatch] = useReducer(reducer, {});
+  // const [state, dispatch] = useReducer(reducer, originalDecks);
   const [currentDeck, setCurrentDeck] = useState('');
   const [answerDisplayed, setAnswerDisplay] = useState(false);
   const [currentCardId, setCurrentCardId] = useState(0);
@@ -101,4 +104,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Flashcards;

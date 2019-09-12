@@ -1,15 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { FirebaseContext } from '../utils/firebaseContext';
+import FirebaseContext from '../utils/firebaseContext';
 // drop-in UI component
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 export default function LandingPage(){
   // hooks equivalent to <FirebaseContext.Consumer>
-  const firebase = useContext(FirebaseContext);
+  const { firebase, auth } = useContext(FirebaseContext);
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(()=>{
-    const currentUser = firebase.auth().currentUser;
+    const currentUser = firebase.currentUser;
     setLoggedIn(!!currentUser);
   }
   , [firebase]);
@@ -33,10 +33,7 @@ export default function LandingPage(){
         {loggedIn ?
           <p>you are signed in</p> :
           <div>
-            <p>
-                something something
-            </p>
-              <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+              <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
           </div>
         }
       </div>

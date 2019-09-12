@@ -4,10 +4,10 @@ import './index.css';
 import Router from './Router';
 import * as serviceWorker from './utils/serviceWorker';
 import injectKaiosNavigation from './react-kaiOS-navigation/index';
-import firebase, { FirebaseContext } from './utils/firebaseContext';
+import FirebaseContext, { app, auth, db, firebase } from './utils/firebaseContext';
 
 ReactDOM.render(
-    <FirebaseContext.Provider value={firebase}>
+    <FirebaseContext.Provider value={{app, auth, db, firebase}}>
         <Router />
     </FirebaseContext.Provider>
 , document.getElementById('root'));
