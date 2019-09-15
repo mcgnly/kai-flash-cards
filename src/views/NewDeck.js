@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import FirebaseContext from '../utils/firebaseContext';
+import React, { useState } from 'react';
 import NewCard from './NewCard';
-
 
 export default function NewDeck({uid}){
     const [newDeck, setNewDeck] = useState('');

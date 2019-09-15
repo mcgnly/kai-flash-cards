@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './css/Card.css';
 
-function Card({ currentCard, setAnswerDisplay, answerDisplayed }) {
+export default function Card({ currentCard, setAnswerDisplay, answerDisplayed }) {
     return (
         <div className='currentCard'>
           <p>Question: {currentCard.q}</p>
@@ -15,4 +15,3 @@ function Card({ currentCard, setAnswerDisplay, answerDisplayed }) {
         </div>
     )
 }
-export {Card};

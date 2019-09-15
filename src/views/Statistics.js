@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './css/Statistics.css';
 
-function Statistics({ currentCard }) {
+export default function Statistics({ currentCard }) {
     return (
         <div>
             <p>right : wrong</p>
@@ -10,5 +10,4 @@ function Statistics({ currentCard }) {
         </div>
     );
 }
-export { Statistics }
       

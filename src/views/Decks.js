@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import FirebaseContext from '../utils/firebaseContext';
 import NewDeck from './NewDeck';
+import CardContainer from './CardContainer';
 
 
 export default function Decks({uid}){
@@ -13,7 +14,7 @@ export default function Decks({uid}){
         db.collection('users').doc(uid).collection('decks').get()
             .then(querySnapshot => {
                 querySnapshot.docs.forEach(doc => {
-                    tempDecks.push(doc.data().name);
+                    tempDecks.push(doc.id);
                 });
                 setMyDecks(tempDecks);
             }); 
@@ -23,11 +24,13 @@ export default function Decks({uid}){
         <div>
             <ul>
                 { myDecks.map((item)=>(
-                        <li onClick={()=>setCurrentDeck(item)}>{item}</li>
-                    )) }
+                    <li onClick={()=>setCurrentDeck(item)}>{item}</li>
+                )) }
             </ul>
             <h2>Current deck is:</h2>
             <p>{currentDeck}</p>
+            <CardContainer uid={uid} deck={currentDeck} />
+            <div>-----------</div>
             <NewDeck uid={uid}/>
         </div>
     )

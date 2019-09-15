@@ -17,8 +17,6 @@ import reducer from '../utils/reducer';
 // };
 
 function Flashcards({ myDecks }) {
-  console.log('my decks', myDecks)
-
   const [state, dispatch] = useReducer(reducer, {});
   // const [state, dispatch] = useReducer(reducer, originalDecks);
   const [currentDeck, setCurrentDeck] = useState('');
