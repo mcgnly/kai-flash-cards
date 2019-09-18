@@ -22,10 +22,11 @@ export default function CardContainer({currentDeck, decksRef}) {
     const [currentCard, setCurrentCard] = useState({'init': emptyCard});
     const [index, setIndex] = useState(0);
     const [answerDisplayed, setAnswerDisplay] = useState(false);
-    
+    const [cardsLength, setCardsLength] = useState(0);
     useEffect(()=>{
-        const cardKeys = Object.keys(currentDeck);
-        const currentCardKey = cardKeys[index];
+        const keys = Object.keys(currentDeck);
+        const currentCardKey = keys[index];
+        setCardsLength(keys.length);
         setCurrentCard(currentDeck[currentCardKey]);
     }, [currentDeck, index]);
 
@@ -34,8 +35,11 @@ export default function CardContainer({currentDeck, decksRef}) {
     }
 
     function nextCard(){
-
-        setIndex(index+1)
+        const maxIndex = cardsLength-1;
+        if (index<maxIndex) {
+            setIndex(index+1)
+        }
+        return;
     }
 
     return (
@@ -43,7 +47,6 @@ export default function CardContainer({currentDeck, decksRef}) {
             <Card currentCard={currentCard} setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} />
             <Statistics currentCard={currentCard} />
             <button onClick={nextCard}>Next card</button>
-            {/* <NewCard deck={deck} uid={uid}/> */}
         </div>
     );
 }

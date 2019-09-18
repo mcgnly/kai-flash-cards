@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import FirebaseContext from '../utils/firebaseContext';
 import NewDeck from './NewDeck';
+import NewCard from './NewCard';
 import CardContainer from './CardContainer';
 
 // uid
@@ -42,9 +43,14 @@ export default function Decks({uid}){
             </ul>
             <h2>Current deck is:</h2>
             <p>{currentDeckName}</p>
-            {currentDeckName && <CardContainer currentDeck={allDecks[currentDeckName]} decksRef={decksRef}/>}
+            {currentDeckName && 
+            <div>
+                <CardContainer currentDeck={allDecks[currentDeckName]} />
+                <NewCard allDecks={allDecks} decksRef={decksRef} currentDeckName={currentDeckName} />
+            </div>
+            }
             <div>-----------</div>
-            <NewDeck uid={uid}/>
+            <NewDeck allDecks={allDecks} decksRef={decksRef}/>
         </div>
     )
 }

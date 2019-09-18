@@ -1,27 +1,19 @@
 import React, { useContext, useState } from 'react';
 import FirebaseContext from '../utils/firebaseContext';
 
-// uid
-// decks: 
-// german:{
-//     1:{
-//         q: , a: , ...
-//     }
-// }
 
-
-const NewCard = ({ uid, deck })=>{
+const NewCard = ({ deckRef, allDecks, currentDeckName })=>{
     const { db } = useContext(FirebaseContext);
     const [q, setQ] = useState('');
     const [a, setA] = useState('');
 
 function addCardToDb(){
-    const deckRef = db.collection('users').doc(uid);
-    console.log('make a new card', deckRef.get())
-    // .collection('decks')
-    //     .doc(deck)
-    //     .collection('cards');
-
+    const newCard = {[q]:{
+        q: q,
+        a: a,
+        timesCorrect: 0,
+        timesWrong: 0
+    }}
     // deckRef.add({
     //         q,
     //         a,
@@ -34,7 +26,7 @@ function addCardToDb(){
 
 return (
     <div>
-        <p>Create a new card in the deck {deck}</p>
+        <p>Create a new card in the deck {currentDeckName}</p>
         <form>
         <label>
             Question Side:
