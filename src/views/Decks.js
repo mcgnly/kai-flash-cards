@@ -17,16 +17,18 @@ import CardContainer from './CardContainer';
 
 export default function Decks({uid}){
     const { db } = useContext(FirebaseContext);
-    const [myDecks, setMyDecks] = useState({});
-    const [currentDeck, setCurrentDeck] = useState('');
-  
+    const [allDecks, setAllDecks] = useState({});
+    const [decksRef, setDecksRef] = useState({});
+    const [currentDeckName, setCurrentDeckName] = useState('');
+
     useEffect(()=>{
         db.collection('users').doc(uid).get()
             .then(doc => {
                 if (doc.exists){
-                    const allDecks = doc.data();
+                    const allDecks = doc.data().decks;
                     console.log('doc', allDecks)
-                    setMyDecks(allDecks);
+                    setAllDecks(allDecks);
+                    setDecksRef(doc);
                 }
             });
     }, [db, uid]);
@@ -34,13 +36,13 @@ export default function Decks({uid}){
     return (
         <div>
             <ul>
-                { Object.keys(myDecks).map((item)=>(
-                    <li onClick={()=>setCurrentDeck(item)}>{item}</li>
+                { Object.keys(allDecks).map((item)=>(
+                    <li onClick={()=>setCurrentDeckName(item)}>{item}</li>
                 )) }
             </ul>
             <h2>Current deck is:</h2>
-            <p>{currentDeck}</p>
-            <CardContainer deck={currentDeck} allDecks={myDecks}/>
+            <p>{currentDeckName}</p>
+            {currentDeckName && <CardContainer currentDeck={allDecks[currentDeckName]} decksRef={decksRef}/>}
             <div>-----------</div>
             <NewDeck uid={uid}/>
         </div>

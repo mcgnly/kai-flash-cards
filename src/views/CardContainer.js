@@ -16,31 +16,32 @@ const emptyCard = {
   dateLastWrong: null,
 };
 
-export default function CardContainer({deck, allDecks}) {
+export default function CardContainer({currentDeck, decksRef}) {
+    console.log('in card cont', currentDeck)
     const { db } = useContext(FirebaseContext);
-    const [cards, setCards] = useState(allDecks[deck]);
+    const [currentCard, setCurrentCard] = useState({'init': emptyCard});
     const [index, setIndex] = useState(0);
-    // const [currentCard, setCurrentCard] = useState(cards[index]);
     const [answerDisplayed, setAnswerDisplay] = useState(false);
-  
+    
     useEffect(()=>{
-    }, []);
+        const cardKeys = Object.keys(currentDeck);
+        const currentCardKey = cardKeys[index];
+        setCurrentCard(currentDeck[currentCardKey]);
+    }, [currentDeck, index]);
 
     function updateCard(cardId) {
         // TODO how do I update a card?
     }
 
     function nextCard(){
-        
+
         setIndex(index+1)
     }
 
-
-    console.log('cards', cards, cards)
     return (
         <div>
-            <Card currentCard={cards[index]} setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} />
-            <Statistics currentCard={cards[index]} />
+            <Card currentCard={currentCard} setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} />
+            <Statistics currentCard={currentCard} />
             <button onClick={nextCard}>Next card</button>
             {/* <NewCard deck={deck} uid={uid}/> */}
         </div>
