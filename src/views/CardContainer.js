@@ -16,36 +16,25 @@ const emptyCard = {
   dateLastWrong: null,
 };
 
-export default function CardContainer({uid, deck}) {
+export default function CardContainer({deck, allDecks}) {
     const { db } = useContext(FirebaseContext);
-    const [cards, setCards] = useState([emptyCard]);
+    const [cards, setCards] = useState(allDecks[deck]);
     const [index, setIndex] = useState(0);
     // const [currentCard, setCurrentCard] = useState(cards[index]);
     const [answerDisplayed, setAnswerDisplay] = useState(false);
   
     useEffect(()=>{
-        if (uid && deck){
-            let tempCards = [];
-            db.collection('users').doc(uid).collection('decks').doc(deck).collection('cards').get()
-            .then(querySnapshot => {
-                console.log('q snap', querySnapshot.docs)
-                querySnapshot.docs.forEach(doc => {
-                    console.log('doc', doc.data())
-                    tempCards.push(doc.data());
-                });
-                setCards(tempCards);
-            }); 
-        }
-    }, [db, uid, deck]);
+    }, []);
 
     function updateCard(cardId) {
         // TODO how do I update a card?
-        db.collection('users').doc(uid).collection('decks').doc(deck).collection('cards').doc(cardId).update({something:'something'})
     }
 
     function nextCard(){
+        
         setIndex(index+1)
     }
+
 
     console.log('cards', cards, cards)
     return (
@@ -53,7 +42,7 @@ export default function CardContainer({uid, deck}) {
             <Card currentCard={cards[index]} setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} />
             <Statistics currentCard={cards[index]} />
             <button onClick={nextCard}>Next card</button>
-            <NewCard deck={deck} uid={uid}/>
+            {/* <NewCard deck={deck} uid={uid}/> */}
         </div>
     );
 }
