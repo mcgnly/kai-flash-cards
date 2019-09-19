@@ -2,7 +2,6 @@
 import React, {useState, useContext, useEffect} from 'react';
 import FirebaseContext from '../utils/firebaseContext';
 import Card from './Card';
-import NewCard from './NewCard';
 import Statistics from './Statistics';
 import './css/Card.css';
 
@@ -23,7 +22,11 @@ export default function CardContainer({currentDeck, decksRef, currentDeckName}) 
     const [answerDisplayed, setAnswerDisplay] = useState(false);
     const [cardsLength, setCardsLength] = useState(0);
     const [currentCardKey, setCurrentCardKey] = useState('');
+    const [deckIsNotEmpty, setDeckIsNotEmpty] = useState(false);
+
     useEffect(()=>{
+        const isNotEmpty= Object.getOwnPropertyNames(currentDeck).length > 0;
+        setDeckIsNotEmpty(isNotEmpty)
         if (currentDeck) {
             const keys = Object.keys(currentDeck);
             const currentKey = keys[index];
@@ -46,7 +49,7 @@ export default function CardContainer({currentDeck, decksRef, currentDeckName}) 
         const dotStringCount = `${currentDeckName}.${currentCardKey}.${key}Count`;
         const dotStringTime = `${currentDeckName}.${currentCardKey}.${key}Timestamp`;
         decksRef.update({
-            [dotStringCount]: currentCard[key]+1,
+            [dotStringCount]: currentCard[key+'Count']+1,
             [dotStringTime]: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(()=>
@@ -59,10 +62,13 @@ export default function CardContainer({currentDeck, decksRef, currentDeckName}) 
 
     return (
         <div>
-            <Card currentCard={currentCard} setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} incrementTimesCorrect={()=>incrementCount('correct')} incrementTimesWrong={()=>incrementCount('wrong')} />
-          
-            <Statistics currentCard={currentCard} />
-            <button onClick={nextCard}>Next card</button>
+            {deckIsNotEmpty && 
+            <div>
+                <Card currentCard={currentCard} setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} incrementTimesCorrect={()=>incrementCount('correct')} incrementTimesWrong={()=>incrementCount('wrong')} />
+                <Statistics currentCard={currentCard} />
+                <button onClick={nextCard}>Next card</button>
+            </div>
+            }
         </div>
     );
 }

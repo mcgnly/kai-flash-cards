@@ -32,12 +32,7 @@ export default function Decks({uid}){
                     setAllDecks(allDecks);
                 }
             });
-    }, [db, uid]);
-
-    function deckIsNotEmpty() {
-        const isNotEmpty= Object.getOwnPropertyNames(allDecks[currentDeckName]).length > 0;
-        return isNotEmpty;
-    }
+    }, [db, uid, allDecks, ]);
 
     return (
         <div>
@@ -50,8 +45,7 @@ export default function Decks({uid}){
             <p>{currentDeckName}</p>
             {currentDeckName && 
             <div>
-                { deckIsNotEmpty() && 
-                <CardContainer currentDeck={allDecks[currentDeckName]} currentDeckName={currentDeckName} decksRef={decksRef} />}
+                <CardContainer currentDeck={allDecks[currentDeckName]} currentDeckName={currentDeckName} decksRef={decksRef} />
                 <NewCard allDecks={allDecks} decksRef={decksRef} currentDeckName={currentDeckName} />
             </div>
             }
