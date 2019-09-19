@@ -23,16 +23,21 @@ export default function Decks({uid}){
     const [currentDeckName, setCurrentDeckName] = useState('');
 
     useEffect(()=>{
-        db.collection('users').doc(uid).get()
+        const documentReference = db.collection('users').doc(uid);
+        setDecksRef(documentReference);
+        documentReference.get()
             .then(doc => {
                 if (doc.exists){
-                    const allDecks = doc.data().decks;
-                    console.log('doc', allDecks)
+                    const allDecks = doc.data();
                     setAllDecks(allDecks);
-                    setDecksRef(doc);
                 }
             });
     }, [db, uid]);
+
+    function deckIsNotEmpty() {
+        const isNotEmpty= Object.getOwnPropertyNames(allDecks[currentDeckName]).length > 0;
+        return isNotEmpty;
+    }
 
     return (
         <div>
@@ -45,7 +50,8 @@ export default function Decks({uid}){
             <p>{currentDeckName}</p>
             {currentDeckName && 
             <div>
-                <CardContainer currentDeck={allDecks[currentDeckName]} />
+                { deckIsNotEmpty() && 
+                <CardContainer currentDeck={allDecks[currentDeckName]} currentDeckName={currentDeckName} decksRef={decksRef} />}
                 <NewCard allDecks={allDecks} decksRef={decksRef} currentDeckName={currentDeckName} />
             </div>
             }

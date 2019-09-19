@@ -5,8 +5,12 @@ export default function NewDeck({decksRef, allDecks}){
 
     function makeNewDeck(){
         const newDecks = {...allDecks, [newDeckName]:{}}
-        console.log('newDecks', newDecks)
-        // decksRef.set(newDecks);
+        decksRef.set(newDecks).then(function() {
+            console.log("new deck successfully written!");
+        })
+        .catch(function(error) {
+            console.error("Error writing deck: ", error);
+        });;
     }
     return (
         <div>
