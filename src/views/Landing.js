@@ -31,6 +31,7 @@ export default function LandingPage(){
       <h3>Landing Page</h3>
       <div>
         {loggedIn ?
+        // TODO push to home
           <p>you are signed in</p> :
           <div>
               <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>

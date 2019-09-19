@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import FirebaseContext from '../utils/firebaseContext';
 import Decks from './Decks'
-// import axios from 'axios';
 
 export default function HomePage(){
   const { auth, db } = useContext(FirebaseContext);
   const [user, setUser] = useState('');
   const [token, setToken] = useState('');
-  const [myDecks, setMyDecks] = useState([]);
 
   useEffect(()=>{
     // use this watcher here so that it finishes initializing before updating
