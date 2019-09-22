@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import FirebaseContext from '../utils/firebaseContext';
 import Decks from './Decks'
+import Landing from './Landing'
 
 export default function HomePage(){
   const { auth, db } = useContext(FirebaseContext);
@@ -35,14 +36,10 @@ export default function HomePage(){
 
   return (
     <div>
-    <h3>Home Page</h3>
-    <div>
       {user ?
         dataView():
-        <p>go to landing to sign in</p>
-        // TODO push to landing route
+        <Landing />
       }
     </div>
-  </div>
   );
 }

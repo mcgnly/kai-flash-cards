@@ -23,6 +23,9 @@ export default function CardContainer({currentDeck, decksRef, currentDeckName}) 
     const [cardsLength, setCardsLength] = useState(0);
     const [currentCardKey, setCurrentCardKey] = useState('');
     const [deckIsNotEmpty, setDeckIsNotEmpty] = useState(false);
+    const [deleteBtnClass, setDeleteBtnClass] = useState({});
+    const [deleteBtnString, setDeleteBtnString] = useState('delete this card');
+    const [deleteBtnClick, setDeleteBtnClick] = useState(deleteCard1);
 
     useEffect(()=>{
         const isNotEmpty= Object.getOwnPropertyNames(currentDeck).length > 0;
@@ -60,13 +63,25 @@ export default function CardContainer({currentDeck, decksRef, currentDeckName}) 
         });
     }
 
+    function deleteCard1() {
+        setDeleteBtnString('yes I am really really sure!')
+        setDeleteBtnClass({backgroundColor: 'tomato'})
+        // setDeleteBtnClick(()=>deleteCard2)
+    }
+    function deleteCard2() {
+        // updates[`songList.${song}`] = admin.firestore.FieldValue.delete();
+        console.log('gonna delete it!')
+    }
+
     return (
         <div>
             {deckIsNotEmpty && 
             <div>
+                <div>({index+1}/{cardsLength})</div>
                 <Card currentCard={currentCard} setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} incrementTimesCorrect={()=>incrementCount('correct')} incrementTimesWrong={()=>incrementCount('wrong')} />
                 <Statistics currentCard={currentCard} />
-                <button onClick={nextCard}>Next card</button>
+                <button disabled={index+1===cardsLength} onClick={nextCard}>Next card</button>
+                <button style={deleteBtnClass} onClick={()=>deleteBtnClick}>{deleteBtnString}</button>
             </div>
             }
         </div>

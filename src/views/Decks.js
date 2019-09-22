@@ -28,17 +28,17 @@ export default function Decks({uid}){
         documentReference.get()
             .then(doc => {
                 if (doc.exists){
-                    const allDecks = doc.data();
-                    setAllDecks(allDecks);
+                    const allDecksFromData = doc.data();
+                    setAllDecks(allDecksFromData);
                 }
             });
-    }, [db, uid, allDecks, ]);
+    }, [db, uid]);
 
     return (
         <div>
             <ul>
                 { Object.keys(allDecks).map((item)=>(
-                    <li onClick={()=>setCurrentDeckName(item)}>{item}</li>
+                    <li key={item} onClick={()=>setCurrentDeckName(item)}>{item}</li>
                 )) }
             </ul>
             <h2>Current deck is:</h2>
@@ -46,10 +46,11 @@ export default function Decks({uid}){
             {currentDeckName && 
             <div>
                 <CardContainer currentDeck={allDecks[currentDeckName]} currentDeckName={currentDeckName} decksRef={decksRef} />
-                <NewCard allDecks={allDecks} decksRef={decksRef} currentDeckName={currentDeckName} />
+                <NewCard allDecks={allDecks} decksRef={decksRef} currentDeckName={currentDeckName} allCards={Object.keys(allDecks[currentDeckName])} />
             </div>
             }
             <div>-----------</div>
+            <br />
             <NewDeck allDecks={allDecks} decksRef={decksRef}/>
         </div>
     )
