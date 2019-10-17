@@ -19,7 +19,7 @@ export default function NewDeck({decksRef, allDecks}){
         })
         .catch(function(error) {
             console.error("Error writing deck: ", error);
-        });;
+        });
     }
 
     return (

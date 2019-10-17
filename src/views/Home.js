@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import FirebaseContext from '../utils/firebaseContext';
 import Decks from './Decks'
 import Landing from './Landing'
+import './css/Home.css';
 
 export default function HomePage(){
   const { auth, db } = useContext(FirebaseContext);
@@ -28,7 +29,10 @@ export default function HomePage(){
   function dataView() {
     return (
       <div>
-        <p>Hello, {user.displayName},</p>
+        <div className='homeView'>
+          <h1>Kai Cards</h1>
+          <p>Hello, {user.displayName}</p>
+        </div>
         <Decks uid={user.uid} />
       </div>
     );

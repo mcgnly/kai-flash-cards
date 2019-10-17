@@ -18,6 +18,7 @@ const config = {
 const app = firebase.initializeApp(config);
 const auth = app.auth();
 const db = app.firestore();
+// db.setPersistenceEnabled(true)
 
 const FirebaseContext = React.createContext(null);
 

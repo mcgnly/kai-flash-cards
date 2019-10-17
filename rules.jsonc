@@ -1,0 +1,37 @@
+{
+  "rules": {
+          // this stores the last message I sent so I can throttle them by timestamp
+      "last_message": {
+        "$user": {
+          // timestamp can't be deleted or I could just recreate it to bypass our throttle
+          ".write": "newData.exists() && auth.uid === $user",
+          // the new value must be at least 5000 milliseconds after the last (no more than one message every five seconds)
+          // the new value must be before now (it will be since `now` is when it reaches the server unless I try to cheat)
+          ".validate": "newData.isNumber() && newData.val() === now && (!data.exists() || newData.val() > data.val()+5000)"
+        }
+      },
+
+      "messages": {
+        "$message_id": {
+          // message must have a timestamp attribute and a sender attribute
+          ".write": "newData.hasChildren(['timestamp', 'sender', 'message'])",
+          "sender": {
+            ".validate": "newData.val() === auth.uid"
+          },
+          "timestamp": {
+            // in order to write a message, I must first make an entry in timestamp_index
+            // additionally, that message must be within 500ms of now, which means I can't
+            // just re-use the same one over and over, thus, we've effectively required messages
+            // to be 5 seconds apart
+            ".validate": "newData.val() >= now - 500 && newData.val() === data.parent().parent().parent().child('last_message/'+auth.uid).val()"
+          },
+          "message": {
+            ".validate": "newData.isString() && newData.val().length < 500" 
+          },
+          "$other": {
+            ".validate": false 
+          }
+        }
+      } 
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import FirebaseContext from '../utils/firebaseContext';
 import NewDeck from './NewDeck';
-import NewCard from './NewCard';
+import SingleDeck from './SingleDeck';
 import CardContainer from './CardContainer';
 
 // uid
@@ -17,41 +17,66 @@ import CardContainer from './CardContainer';
 // }
 
 export default function Decks({uid}){
-    const { db } = useContext(FirebaseContext);
+    const { db, firebase } = useContext(FirebaseContext);
     const [allDecks, setAllDecks] = useState({});
     const [decksRef, setDecksRef] = useState({});
     const [currentDeckName, setCurrentDeckName] = useState('');
+    const timestamp= firebase.firestore.Timestamp;
 
     useEffect(()=>{
         const documentReference = db.collection('users').doc(uid);
         setDecksRef(documentReference);
+        
+        documentReference.update({
+            millis: setTimestamp()
+        }).then(()=>
         documentReference.get()
             .then(doc => {
                 if (doc.exists){
                     const allDecksFromData = doc.data();
+                    console.log('doc info', allDecksFromData)
                     setAllDecks(allDecksFromData);
                 }
-            });
+            }))
     }, [db, uid]);
+
+    function setTimestamp(){
+        const millis = timestamp.now().toMillis()
+        console.log('millis', millis)
+        return millis;
+    }
+
+    function deleteDeck(specificDeck) {
+        decksRef.update({
+            [specificDeck]: firebase.firestore.FieldValue.delete()
+        }).then(()=>{
+            const newAllDecks = {...allDecks}
+            delete newAllDecks[specificDeck]
+            setCurrentDeckName('')
+            setAllDecks(newAllDecks)
+        });
+    }
 
     return (
         <div>
-            <ul>
-                { Object.keys(allDecks).map((item)=>(
-                    <li key={item} onClick={()=>setCurrentDeckName(item)}>{item}</li>
-                )) }
-            </ul>
-            <h2>Current deck is:</h2>
-            <p>{currentDeckName}</p>
-            {currentDeckName && 
-            <div>
-                <CardContainer currentDeck={allDecks[currentDeckName]} currentDeckName={currentDeckName} decksRef={decksRef} />
-                <NewCard allDecks={allDecks} decksRef={decksRef} currentDeckName={currentDeckName} allCards={Object.keys(allDecks[currentDeckName])} />
+            <div className='decksView'>
+                <ul>
+                    { Object.keys(allDecks).map((item)=>(
+                        <li key={item} onClick={()=>setCurrentDeckName(item)}>
+                            <div>
+                                {item}
+                                <button className='deleteDeck' onClick={(e) => {
+                                    if (window.confirm('Are you sure you wish to delete this whole deck?')){
+                                        deleteDeck(item)
+                                    } 
+                                }}> X </button>
+                            </div>
+                        </li>
+                    )) }
+                </ul>
+                <NewDeck allDecks={allDecks} decksRef={decksRef}/>
             </div>
-            }
-            <div>-----------</div>
-            <br />
-            <NewDeck allDecks={allDecks} decksRef={decksRef}/>
+                <SingleDeck currentDeckName={currentDeckName} allDecks={allDecks} decksRef={decksRef} />
         </div>
     )
 }

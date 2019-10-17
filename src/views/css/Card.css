@@ -5,3 +5,9 @@
     border: 2px solid gray;
     border-radius: 5px;
 }
+
+.deleteButton{ 
+    border: 2px solid tomato;
+    border-radius: 5px;
+}
+

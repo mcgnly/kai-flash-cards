@@ -23,9 +23,6 @@ export default function CardContainer({currentDeck, decksRef, currentDeckName}) 
     const [cardsLength, setCardsLength] = useState(0);
     const [currentCardKey, setCurrentCardKey] = useState('');
     const [deckIsNotEmpty, setDeckIsNotEmpty] = useState(false);
-    const [deleteBtnClass, setDeleteBtnClass] = useState({});
-    const [deleteBtnString, setDeleteBtnString] = useState('delete this card');
-    const [deleteBtnClick, setDeleteBtnClick] = useState(deleteCard1);
 
     useEffect(()=>{
         const isNotEmpty= Object.getOwnPropertyNames(currentDeck).length > 0;
@@ -63,15 +60,15 @@ export default function CardContainer({currentDeck, decksRef, currentDeckName}) 
         });
     }
 
-    function deleteCard1() {
-        setDeleteBtnString('yes I am really really sure!')
-        setDeleteBtnClass({backgroundColor: 'tomato'})
-        // setDeleteBtnClick(()=>deleteCard2)
+    function deleteCard() {
+        const dotString = `${currentDeckName}.${currentCardKey}`;
+        decksRef.update({
+            [dotString]: firebase.firestore.FieldValue.delete()
+        }).then(()=>{
+            nextCard()
+        });
     }
-    function deleteCard2() {
-        // updates[`songList.${song}`] = admin.firestore.FieldValue.delete();
-        console.log('gonna delete it!')
-    }
+    
 
     return (
         <div>
@@ -81,7 +78,11 @@ export default function CardContainer({currentDeck, decksRef, currentDeckName}) 
                 <Card currentCard={currentCard} setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} incrementTimesCorrect={()=>incrementCount('correct')} incrementTimesWrong={()=>incrementCount('wrong')} />
                 <Statistics currentCard={currentCard} />
                 <button disabled={index+1===cardsLength} onClick={nextCard}>Next card</button>
-                <button style={deleteBtnClass} onClick={()=>deleteBtnClick}>{deleteBtnString}</button>
+                <button className='deleteButton' onClick={(e) => {
+                    if (window.confirm('Are you sure you wish to delete this item?')){
+                        deleteCard()
+                    } 
+                }}>Delete this card</button>
             </div>
             }
         </div>
