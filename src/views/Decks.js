@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import FirebaseContext from '../utils/firebaseContext';
 import NewDeck from './NewDeck';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -32,7 +33,10 @@ export default function Decks({ setCurrentDeckName, allDecks, currentDeckName, d
 
     return (
             <div className='decksView'>
-                <h1>Your decks</h1>
+                <Typography variant="h5" gutterBottom>
+                    Your decks
+                </Typography>
+
                 { Object.keys(allDecks).map((item)=>(
                     <div>
                         <Button variant="contained" color="primary" className={classes.button} key={item} onClick={()=>{

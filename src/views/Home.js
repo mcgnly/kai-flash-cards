@@ -74,7 +74,7 @@ export default function HomePage(){
   return (
     <div>
       {user ?
-        <div>
+        <div className='pageMargins'>
           {/* {currentPg === pages.welcome && <div className='homeView'>
             <h1>Kai Cards</h1>
             <p>Hello, {user.displayName}</p>

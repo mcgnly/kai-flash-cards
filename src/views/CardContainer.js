@@ -4,6 +4,12 @@ import FirebaseContext from '../utils/firebaseContext';
 import Card from './Card';
 import Statistics from './Statistics';
 import './css/Card.css';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 
 const emptyCard = {
   id: null,
@@ -72,21 +78,25 @@ export default function CardContainer({currentDeck, decksRef, currentDeckName, s
 
     return (
         <div>
-            <button className='backBtn' onClick={()=>setcurrentPg('singleDeck')}>back to decks</button>
+            <IconButton onClick={()=>setcurrentPg('decks')} aria-label="back">
+                <ArrowBackIcon />
+            </IconButton>
 
             {deckIsNotEmpty && 
             <div>
-                <div>({index+1}/{cardsLength})</div>
+                <Typography variant="h5">({index+1}/{cardsLength})</Typography>
                 <Card currentCard={currentCard} setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} 
                 // incrementTimesCorrect={()=>incrementCount('correct')} incrementTimesWrong={()=>incrementCount('wrong')} 
                 />
                 {/* <Statistics currentCard={currentCard} /> */}
-                <button disabled={index+1===cardsLength} onClick={nextCard}>Next card</button>
-                <button className='deleteButton' onClick={(e) => {
-                    if (window.confirm('Are you sure you wish to delete this item?')){
-                        deleteCard()
-                    } 
-                }}>Delete this card</button>
+                <Button variant="outlined" color="secondary" size='small'  onClick={() => {
+                        if (window.confirm('Are you sure you wish to delete this item?')){
+                            deleteCard()
+                        }
+                    }}>x</Button>
+                <IconButton disabled={index+1===cardsLength} onClick={nextCard}aria-label="next">
+                    <ArrowForwardIcon />
+                </IconButton>
             </div>
             }
         </div>

@@ -29,8 +29,6 @@ export default function NewDeck({decksRef, allDecks, classes}){
     return (
         <div>
             <TextField
-                // error
-                // id="outlined-error"
                 label="Add A New Deck"
                 className={classes.textField}
                 margin="normal"

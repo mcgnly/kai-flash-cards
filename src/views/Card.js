@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import './css/Card.css';
 
 export default function Card({ currentCard, setAnswerDisplay, answerDisplayed,incrementTimesCorrect, incrementTimesWrong }) {
     return (
         <div className='currentCard'>
-          <p>Question: {currentCard.q}</p>
+          <Typography variant="h5">Question: {currentCard.q}</Typography>
           {!answerDisplayed ? 
-          <button 
-            className='answerButton'
-            onClick={()=>setAnswerDisplay(!answerDisplayed)
-            }>Reveal answer</button> :
+          <Button variant="outlined" color="secondary" size='small'                 onClick={()=>setAnswerDisplay(!answerDisplayed)}
+          >Answer?</Button>:
             <div>
-                <p>Answer: {currentCard.a}</p>
+                <Typography variant="h5">{currentCard.a}</Typography>
                 {/* <button 
                 className='answerButton'
                 onClick={()=>incrementTimesCorrect()

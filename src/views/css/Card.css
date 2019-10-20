@@ -1,13 +1,6 @@
 .currentCard {
-    border: 2px solid black;    
-}
-.answerButton{ 
-    border: 2px solid gray;
-    border-radius: 5px;
+    border: 2px solid black;
+    border-radius: 10px;  
 }
 
-.deleteButton{ 
-    border: 2px solid tomato;
-    border-radius: 5px;
-}
 
