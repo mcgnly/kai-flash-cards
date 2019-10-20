@@ -12,14 +12,14 @@ export default function Card({ currentCard, setAnswerDisplay, answerDisplayed,in
             }>Reveal answer</button> :
             <div>
                 <p>Answer: {currentCard.a}</p>
-                <button 
+                {/* <button 
                 className='answerButton'
                 onClick={()=>incrementTimesCorrect()
                 }>got it!</button>
                 <button 
                 className='answerButton'
                 onClick={()=>incrementTimesWrong()
-                }>didn't get it :(</button>
+                }>didn't get it :(</button> */}
             </div>
             }
         </div>

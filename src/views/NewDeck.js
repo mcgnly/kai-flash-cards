@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import TextField from '@material-ui/core/TextField';
 
-export default function NewDeck({decksRef, allDecks}){
+
+export default function NewDeck({decksRef, allDecks, classes}){
     const [newDeckName, setNewDeckName] = useState('');
     const [invalidDeckName, setInvalidDeckName] = useState(true);
     const DECKS_LIMIT = 100;
@@ -24,11 +28,18 @@ export default function NewDeck({decksRef, allDecks}){
 
     return (
         <div>
-                <label>
-                    Make a New Deck:
-                    <input type="text" name="deck" onChange={(e)=>setNewDeckName(e.target.value)}/>
-                    <button disabled={invalidDeckName} onClick={makeNewDeck} >Create new deck</button>
-                </label>
+            <TextField
+                // error
+                // id="outlined-error"
+                label="Add A New Deck"
+                className={classes.textField}
+                margin="normal"
+                variant="outlined"
+                onChange={(e)=>setNewDeckName(e.target.value)}
+            />
+            <IconButton disabled={invalidDeckName} onClick={makeNewDeck}  className={classes.button} aria-label="add deck">
+                <AddCircleIcon />
+            </IconButton>
         </div>
     )
 }

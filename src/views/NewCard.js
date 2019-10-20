@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const NewCard = ({ decksRef, currentDeckName, allCards })=>{
+const NewCard = ({ decksRef, currentDeckName, allCards, setcurrentPg })=>{
     const [q, setQ] = useState('');
     const [a, setA] = useState('');
     const [invalidCardName, setInvalidCardName] = useState(true)
@@ -32,6 +32,7 @@ const NewCard = ({ decksRef, currentDeckName, allCards })=>{
 
     return (
         <div>
+            <button className='backBtn' onClick={()=>setcurrentPg('singleDeck')}>back to decks</button>
             <p>Create a new card in the deck {currentDeckName}</p>
             <div>
                 Question Side:

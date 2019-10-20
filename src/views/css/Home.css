@@ -54,3 +54,18 @@
   border: 4px solid blueviolet;
   border-radius: 20px;
 }
+
+.primaryBtn {
+  background-color: cornflowerblue;
+  margin:2px;
+
+}
+
+.backBtn {
+  background-color: plum;
+  border: 4px solid blueviolet;
+}
+
+.deleteBtn {
+  border: 4px solid tomato;
+}

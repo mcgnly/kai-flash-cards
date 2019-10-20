@@ -15,7 +15,7 @@ const emptyCard = {
   dateLastWrong: null,
 };
 
-export default function CardContainer({currentDeck, decksRef, currentDeckName}) {
+export default function CardContainer({currentDeck, decksRef, currentDeckName, setcurrentPg }) {
     const { firebase } = useContext(FirebaseContext);
     const [currentCard, setCurrentCard] = useState({'init': emptyCard});
     const [index, setIndex] = useState(0);
@@ -72,11 +72,15 @@ export default function CardContainer({currentDeck, decksRef, currentDeckName}) 
 
     return (
         <div>
+            <button className='backBtn' onClick={()=>setcurrentPg('singleDeck')}>back to decks</button>
+
             {deckIsNotEmpty && 
             <div>
                 <div>({index+1}/{cardsLength})</div>
-                <Card currentCard={currentCard} setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} incrementTimesCorrect={()=>incrementCount('correct')} incrementTimesWrong={()=>incrementCount('wrong')} />
-                <Statistics currentCard={currentCard} />
+                <Card currentCard={currentCard} setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} 
+                // incrementTimesCorrect={()=>incrementCount('correct')} incrementTimesWrong={()=>incrementCount('wrong')} 
+                />
+                {/* <Statistics currentCard={currentCard} /> */}
                 <button disabled={index+1===cardsLength} onClick={nextCard}>Next card</button>
                 <button className='deleteButton' onClick={(e) => {
                     if (window.confirm('Are you sure you wish to delete this item?')){

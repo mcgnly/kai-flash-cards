@@ -1,50 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import FirebaseContext from '../utils/firebaseContext';
 import NewDeck from './NewDeck';
-import SingleDeck from './SingleDeck';
-import CardContainer from './CardContainer';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
-// uid
-// decks: {
-    // german:{
-    //     1:{q: , a: , ...},
-    //     2:{q: , a: , ...},
-    //      },
-    // french:{
-    //     1:{q: , a: , ...},
-    //     2:{q: , a: , ...},
-    // }
-// }
+const useStyles = makeStyles(theme => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+  },
+}));
 
-export default function Decks({uid}){
-    const { db, firebase } = useContext(FirebaseContext);
-    const [allDecks, setAllDecks] = useState({});
-    const [decksRef, setDecksRef] = useState({});
-    const [currentDeckName, setCurrentDeckName] = useState('');
-    const timestamp= firebase.firestore.Timestamp;
-
-    useEffect(()=>{
-        const documentReference = db.collection('users').doc(uid);
-        setDecksRef(documentReference);
-        
-        documentReference.update({
-            millis: setTimestamp()
-        }).then(()=>
-        documentReference.get()
-            .then(doc => {
-                if (doc.exists){
-                    const allDecksFromData = doc.data();
-                    console.log('doc info', allDecksFromData)
-                    setAllDecks(allDecksFromData);
-                }
-            }))
-    }, [db, uid]);
-
-    function setTimestamp(){
-        const millis = timestamp.now().toMillis()
-        console.log('millis', millis)
-        return millis;
-    }
+export default function Decks({ setCurrentDeckName, allDecks, currentDeckName, decksRef, setcurrentPg, setAllDecks }){
+    const { firebase } = useContext(FirebaseContext);
 
     function deleteDeck(specificDeck) {
         decksRef.update({
@@ -57,26 +28,27 @@ export default function Decks({uid}){
         });
     }
 
+    const classes = useStyles();
+
     return (
-        <div>
             <div className='decksView'>
-                <ul>
-                    { Object.keys(allDecks).map((item)=>(
-                        <li key={item} onClick={()=>setCurrentDeckName(item)}>
-                            <div>
-                                {item}
-                                <button className='deleteDeck' onClick={(e) => {
-                                    if (window.confirm('Are you sure you wish to delete this whole deck?')){
-                                        deleteDeck(item)
-                                    } 
-                                }}> X </button>
-                            </div>
-                        </li>
-                    )) }
-                </ul>
-                <NewDeck allDecks={allDecks} decksRef={decksRef}/>
-            </div>
-                <SingleDeck currentDeckName={currentDeckName} allDecks={allDecks} decksRef={decksRef} />
+                <h1>Your decks</h1>
+                { Object.keys(allDecks).map((item)=>(
+                    <div>
+                        <Button variant="contained" color="primary" className={classes.button} key={item} onClick={()=>{
+                            setCurrentDeckName(item)
+                            setcurrentPg('singleDeck')
+                            }}>
+                            {item}
+                        </Button>
+                        <Button variant="outlined" color="secondary" size='small'  onClick={(e) => {
+                            if (window.confirm('Are you sure you wish to delete this whole deck?')){
+                                deleteDeck(item)
+                            } 
+                        }}> X </Button>
+                    </div>
+                )) }
+            <NewDeck classes={classes} allDecks={allDecks} decksRef={decksRef}/>
         </div>
     )
 }
