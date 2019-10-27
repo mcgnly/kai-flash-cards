@@ -1,15 +1,15 @@
 
 import React, {useState, useContext, useEffect} from 'react';
 import FirebaseContext from '../utils/firebaseContext';
-import Card from './Card';
-import Statistics from './Statistics';
-import './css/Card.css';
+import Flashcard from './Flashcard';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Divider from '@material-ui/core/Divider';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 
 const emptyCard = {
   id: null,
@@ -25,7 +25,7 @@ export default function CardContainer({currentDeck, decksRef, currentDeckName, s
     const { firebase } = useContext(FirebaseContext);
     const [currentCard, setCurrentCard] = useState({'init': emptyCard});
     const [index, setIndex] = useState(0);
-    const [answerDisplayed, setAnswerDisplay] = useState(false);
+    const [answerDisplayed, setAnswerDisplay] = useState(true);
     const [cardsLength, setCardsLength] = useState(0);
     const [currentCardKey, setCurrentCardKey] = useState('');
     const [deckIsNotEmpty, setDeckIsNotEmpty] = useState(false);
@@ -50,21 +50,28 @@ export default function CardContainer({currentDeck, decksRef, currentDeckName, s
         return;
     }
 
-    function incrementCount(key){
-        // french.hello.timesCorrect
-        const dotStringCount = `${currentDeckName}.${currentCardKey}.${key}Count`;
-        const dotStringTime = `${currentDeckName}.${currentCardKey}.${key}Timestamp`;
-        decksRef.update({
-            [dotStringCount]: currentCard[key+'Count']+1,
-            [dotStringTime]: firebase.firestore.FieldValue.serverTimestamp()
-        })
-        .then(()=>
-            console.log("count updated!")
-        )
-        .catch(function(error) {
-            console.error("Error writing document: ", error);
-        });
+    function previousCard(){
+        if (index>0) {
+            setIndex(index-1)
+        }
+        return;
     }
+
+    // function incrementCount(key){
+    //     // french.hello.timesCorrect
+    //     const dotStringCount = `${currentDeckName}.${currentCardKey}.${key}Count`;
+    //     const dotStringTime = `${currentDeckName}.${currentCardKey}.${key}Timestamp`;
+    //     decksRef.update({
+    //         [dotStringCount]: currentCard[key+'Count']+1,
+    //         [dotStringTime]: firebase.firestore.FieldValue.serverTimestamp()
+    //     })
+    //     .then(()=>
+    //         console.log("count updated!")
+    //     )
+    //     .catch(function(error) {
+    //         console.error("Error writing document: ", error);
+    //     });
+    // }
 
     function deleteCard() {
         const dotString = `${currentDeckName}.${currentCardKey}`;
@@ -74,29 +81,36 @@ export default function CardContainer({currentDeck, decksRef, currentDeckName, s
             nextCard()
         });
     }
-    
 
     return (
         <div>
-            <IconButton onClick={()=>setcurrentPg('decks')} aria-label="back">
-                <ArrowBackIcon />
-            </IconButton>
+            <AppBar position="static" className='noMargin'>
+                <Toolbar>
+                <IconButton edge="start" color="inherit" onClick={()=>setcurrentPg('singleDeck')} aria-label="back">
+                    <ArrowBackIcon />
+                </IconButton>
+                    <Typography variant="overline">({index+1}/{cardsLength})</Typography>
+                </Toolbar>
+            </AppBar>
 
             {deckIsNotEmpty && 
             <div>
-                <Typography variant="h5">({index+1}/{cardsLength})</Typography>
-                <Card currentCard={currentCard} setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} 
+                <Flashcard currentCard={currentCard} setAnswerDisplay={setAnswerDisplay} answerDisplayed={answerDisplayed} 
                 // incrementTimesCorrect={()=>incrementCount('correct')} incrementTimesWrong={()=>incrementCount('wrong')} 
                 />
+                <IconButton disabled={index===0} onClick={previousCard}aria-label="previous">
+                    <ArrowBackIcon />
+                </IconButton>
                 {/* <Statistics currentCard={currentCard} /> */}
+                <IconButton disabled={index+1===cardsLength} onClick={nextCard}aria-label="next">
+                    <ArrowForwardIcon />
+                </IconButton>
+                <Divider />
                 <Button variant="outlined" color="secondary" size='small'  onClick={() => {
                         if (window.confirm('Are you sure you wish to delete this item?')){
                             deleteCard()
                         }
-                    }}>x</Button>
-                <IconButton disabled={index+1===cardsLength} onClick={nextCard}aria-label="next">
-                    <ArrowForwardIcon />
-                </IconButton>
+                    }}>Delete this card</Button>
             </div>
             }
         </div>

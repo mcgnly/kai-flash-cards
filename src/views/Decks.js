@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import FirebaseContext from '../utils/firebaseContext';
+import React from 'react';
 import NewDeck from './NewDeck';
-import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -16,40 +16,31 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Decks({ setCurrentDeckName, allDecks, currentDeckName, decksRef, setcurrentPg, setAllDecks }){
-    const { firebase } = useContext(FirebaseContext);
-
-    function deleteDeck(specificDeck) {
-        decksRef.update({
-            [specificDeck]: firebase.firestore.FieldValue.delete()
-        }).then(()=>{
-            const newAllDecks = {...allDecks}
-            delete newAllDecks[specificDeck]
-            setCurrentDeckName('')
-            setAllDecks(newAllDecks)
-        });
-    }
 
     const classes = useStyles();
 
     return (
             <div className='decksView'>
-                <Typography variant="h5" gutterBottom>
-                    Your decks
+                <Typography variant="overline" gutterBottom align='center'> 
+                    All Decks
                 </Typography>
 
                 { Object.keys(allDecks).map((item)=>(
                     <div>
-                        <Button variant="contained" color="primary" className={classes.button} key={item} onClick={()=>{
+                        <Card
+                        className={classes.button}
+                        onClick={()=>{
                             setCurrentDeckName(item)
                             setcurrentPg('singleDeck')
                             }}>
-                            {item}
-                        </Button>
-                        <Button variant="outlined" color="secondary" size='small'  onClick={(e) => {
-                            if (window.confirm('Are you sure you wish to delete this whole deck?')){
-                                deleteDeck(item)
-                            } 
-                        }}> X </Button>
+                            <CardContent>
+                                <Typography variant="body1">
+                                    {item}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                        {/* 
+                         */}
                     </div>
                 )) }
             <NewDeck classes={classes} allDecks={allDecks} decksRef={decksRef}/>

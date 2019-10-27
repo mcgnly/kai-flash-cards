@@ -31,10 +31,12 @@ export default function HomePage(){
   const { auth, db } = useContext(FirebaseContext);
   const [user, setUser] = useState('');
   const [token, setToken] = useState('');
-  const [currentDeckName, setCurrentDeckName] = useState('');
+  const [currentDeckName, setCurrentDeckName] = useState('french');
+  // const [currentDeckName, setCurrentDeckName] = useState('');
   const [allDecks, setAllDecks] = useState({});
   const [decksRef, setDecksRef] = useState({});
-  const [currentPg, setcurrentPg] = useState(pages.decks);
+  const [currentPg, setcurrentPg] = useState(pages.singleDeck);
+  // const [currentPg, setcurrentPg] = useState(pages.decks);
 
   useEffect(()=>{
     // use this watcher here so that it finishes initializing before updating
@@ -72,9 +74,9 @@ export default function HomePage(){
   // }
 
   return (
-    <div>
+    <div className='Home'>
       {user ?
-        <div className='pageMargins'>
+        <div>
           {/* {currentPg === pages.welcome && <div className='homeView'>
             <h1>Kai Cards</h1>
             <p>Hello, {user.displayName}</p>

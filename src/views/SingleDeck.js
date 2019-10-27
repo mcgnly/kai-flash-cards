@@ -1,5 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Typography from '@material-ui/core/Typography';
@@ -18,13 +20,26 @@ const useStyles = makeStyles(theme => ({
 
 export default function SingleDeck({ allDecks, decksRef, currentDeckName, setcurrentPg }){
     const { firebase } = useContext(FirebaseContext);
+    const [showCardList, setShowCardList] = useState(false);
 
     const currentDeck = allDecks[currentDeckName];
 
-    function deleteCard(cardKey) {
-        const dotString = `${currentDeckName}.${cardKey}`;
+    // function deleteCard(cardKey) {
+    //     const dotString = `${currentDeckName}.${cardKey}`;
+    //     decksRef.update({
+    //         [dotString]: firebase.firestore.FieldValue.delete()
+    //     });
+    // }
+
+    function deleteDeck(specificDeck) {
         decksRef.update({
-            [dotString]: firebase.firestore.FieldValue.delete()
+            [currentDeckName]: firebase.firestore.FieldValue.delete()
+        }).then(()=>{
+            const newAllDecks = {...allDecks}
+            delete newAllDecks[currentDeckName]
+            setcurrentPg('decks')
+            // setCurrentDeckName('')
+            // setAllDecks(newAllDecks)
         });
     }
 
@@ -32,27 +47,32 @@ export default function SingleDeck({ allDecks, decksRef, currentDeckName, setcur
 
     return (
         <div>
-            <IconButton onClick={()=>setcurrentPg('decks')} aria-label="back">
+            <IconButton onClick={()=>setcurrentPg('decks')} aria-label="back" >
                 <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="overline" gutterBottom align='center'>
                 {currentDeckName}
             </Typography>
-            <p></p>
+
             {currentDeckName && 
             <div>
                 <Button className={classes.button} variant="contained" color="primary" onClick={()=>setcurrentPg('card')}>start!</Button>
-                {Object.keys(currentDeck).map((cardKey)=>
+                {!showCardList && <Button className={classes.button} variant="contained" color="primary" onClick={()=>setShowCardList(true)}>show list of cards</Button>}
+                {showCardList && Object.keys(currentDeck).map((cardKey)=>
                 <div>
-                    <Button className={classes.button} variant="contained" color="primary"  onClick={()=>setcurrentPg('card')}>{cardKey}</Button>
-                    <Button className={classes.button} variant="outlined" color="secondary" size='small'  onClick={() => {
-                        if (window.confirm('Are you sure you wish to delete this item?')){
-                            deleteCard(cardKey)
-                        }
-                    }}>x</Button>
+                    <Card className={classes.button} onClick={()=>setcurrentPg('card')}>
+                        <CardContent>
+                            {cardKey}
+                        </CardContent>
+                    </Card>
                 </div>
                 )}
                 <Button className={classes.button} variant="outlined" color="primary"  onClick={()=>setcurrentPg('newCard')}>make new card</Button>
+                <Button variant="outlined" color="secondary" size='small'  onClick={(e) => {
+                            if (window.confirm('Are you sure you wish to delete this whole deck?')){
+                                deleteDeck()
+                            } 
+                        }}>Delete this deck</Button>
             </div>
             }
         </div>

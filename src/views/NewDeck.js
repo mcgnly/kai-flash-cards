@@ -27,15 +27,16 @@ export default function NewDeck({decksRef, allDecks, classes}){
     }
 
     return (
-        <div>
+        <div style={{"display":"flex"}}>
             <TextField
+                // error
                 label="Add A New Deck"
                 className={classes.textField}
                 margin="normal"
                 variant="outlined"
                 onChange={(e)=>setNewDeckName(e.target.value)}
             />
-            <IconButton disabled={invalidDeckName} onClick={makeNewDeck}  className={classes.button} aria-label="add deck">
+            <IconButton disabled={invalidDeckName} onClick={makeNewDeck} edge='start' aria-label="add deck">
                 <AddCircleIcon />
             </IconButton>
         </div>
