@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Typography from '@material-ui/core/Typography';
@@ -47,16 +49,19 @@ export default function SingleDeck({ allDecks, decksRef, currentDeckName, setcur
 
     return (
         <div>
-            <IconButton onClick={()=>setcurrentPg('decks')} aria-label="back" >
-                <ArrowBackIcon />
-            </IconButton>
-            <Typography variant="overline" gutterBottom align='center'>
-                {currentDeckName}
-            </Typography>
+
+            <AppBar position="static">
+                <Toolbar>
+                <IconButton edge="start" color="inherit" onClick={()=>setcurrentPg('decks')} aria-label="back">
+                    <ArrowBackIcon />
+                </IconButton>
+                    <Typography variant="h6" alignSelf="flex-end">{currentDeckName}</Typography>
+                </Toolbar>
+            </AppBar>
 
             {currentDeckName && 
             <div>
-                <Button className={classes.button} variant="contained" color="primary" onClick={()=>setcurrentPg('card')}>start!</Button>
+                <Button className={classes.button} variant="contained" color="primary" style={{marginTop:'10px'}} onClick={()=>setcurrentPg('card')}>start!</Button>
                 {!showCardList && <Button className={classes.button} variant="contained" color="primary" onClick={()=>setShowCardList(true)}>show list of cards</Button>}
                 {showCardList && Object.keys(currentDeck).map((cardKey)=>
                 <div>
