@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "dotenv": "^8.1.0",
-    "react-scripts": "3.0.1"
+    "@firebase/testing": "^0.15.0",
+    "filesystem": "1.0.1",
+    "mocha": "5.2.0"
   },
   "dependencies": {
     "@material-ui/core": "^4.5.1",
@@ -21,7 +22,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "mocha --timeout=10000",
+    "test-firebase": "firebase emulators:exec --only firestore 'npm test'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

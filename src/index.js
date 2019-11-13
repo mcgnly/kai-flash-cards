@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Router from './Router';
 import * as serviceWorker from './utils/serviceWorker';
-import injectKaiosNavigation from './react-kaiOS-navigation/index';
 import FirebaseContext, { app, auth, db, firebase } from './utils/firebaseContext';
 
 ReactDOM.render(
